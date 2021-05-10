@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.mailbox.R;
 import com.example.mailbox.api.AuthRetrofitClient;
+import com.example.mailbox.data.Database;
 import com.example.mailbox.model.UserLoginRequest;
 import com.example.mailbox.util.NetworkUtil;
 
@@ -73,8 +74,14 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                // TODO save token to db
-                Toast.makeText(LoginActivity.this, response.headers().get("Authorization"), Toast.LENGTH_LONG).show();
+                // save token to database
+                Database db = Database.getInstance(context);
+                db.saveJWT(username, response.headers().get("Authorization"));
+                Toast.makeText(LoginActivity.this, db.getJwtToken(), Toast.LENGTH_LONG).show();
+                db.close();
+
+                // TODO create intent to logged user page
+
                 enableViews(true);
 
             }
@@ -85,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                 enableViews(true);
             }
         });
-        Toast.makeText(getApplicationContext(), "Logging in!", Toast.LENGTH_SHORT).show();
+
     }
 
     private boolean isDataCorrect() {
