@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Mailbox</string>
+    <string name="log_in_button">Log in</string>
+    <string name="sign_up_button">Sign up</string>
+    <string name="welcome_text">Welcome to Mailbox App!</string>
+    <string name="login_header">Zaloguj się do aplikacji mailbox</string>
+    <string name="email">E-mail</string>
+    <string name="wrong_email">Niepoprawny adres e-mail</string>
+    <string name="password">Hasło</string>
+    <string name="wrong_password">Wprowadź poprawne hasło</string>
+    <string name="forget_password">Nie pamiętasz hasła?</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="no_internet_connection">Brak połączenia z internetem!</string>
+    <string name="login_failed_toast">Nie udało się zalogować do aplikacji</string>
+
+</resources>
