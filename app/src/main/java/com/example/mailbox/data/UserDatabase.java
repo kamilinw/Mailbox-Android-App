@@ -149,4 +149,20 @@ public class UserDatabase extends SQLiteOpenHelper {
 
         return new Gson().fromJson(jsonIds, listType);
     }
+
+    public String getEmail() {
+        Cursor cursor = getReadableDatabase()
+                .query(DATABASE_NAME,
+                        new String[]{"email"},
+                        "id = 1",
+                        null,
+                        null,
+                        null,
+                        null);
+        cursor.moveToFirst();
+        String username = "";
+        username = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+        cursor.close();
+        return username.isEmpty() ? null : username;
+    }
 }

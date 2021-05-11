@@ -15,9 +15,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mailbox.R;
+import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.databinding.ActivityMailboxBinding;
 import com.example.mailbox.ui.main.MainActivity;
 import com.example.mailbox.util.UserUtil;
@@ -39,14 +42,22 @@ public class MailboxActivity extends AppCompatActivity implements NavigationView
         binding = ActivityMailboxBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         Toolbar toolbar = binding.appBar.toolbar;
         setSupportActionBar(toolbar);
-
 
         drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
+        // set username and email on drawer header
+        View view = navigationView.getHeaderView(0);
+        TextView usernameTextView = view.findViewById(R.id.usernameTextView);
+        TextView emailTextView = view.findViewById(R.id.emailTextView);
+        UserDatabase userDatabase = UserDatabase.getInstance(getApplicationContext());
+        usernameTextView.setText(userDatabase.getUsername());
+        emailTextView.setText(userDatabase.getEmail());
+        userDatabase.close();
+
+        // add drawer toggle to bar
         ActionBarDrawerToggle toggle =
                 new ActionBarDrawerToggle(
                         this,
@@ -59,10 +70,12 @@ public class MailboxActivity extends AppCompatActivity implements NavigationView
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Start home fragment
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container,new HomeFragment())
                 .commit();
+
     }
 
     @Override
