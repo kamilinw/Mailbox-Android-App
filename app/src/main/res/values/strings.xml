@@ -20,7 +20,7 @@
     <string name="menu_about">O aplikacji</string>
     <string name="navigation_drawer_open">Otwórz menu</string>
     <string name="navigation_drawer_close">Zamknij menu</string>
-
+    <string name="mailbox_name">Nazwa skrzynki</string>
 
 
 </resources>

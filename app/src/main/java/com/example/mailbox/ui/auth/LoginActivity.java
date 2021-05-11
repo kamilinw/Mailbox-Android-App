@@ -15,11 +15,11 @@ import android.widget.Toast;
 
 import com.example.mailbox.R;
 import com.example.mailbox.api.AuthRetrofitClient;
-import com.example.mailbox.data.Database;
+import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.model.UserLoginRequest;
-import com.example.mailbox.ui.mailbox.MailboxActivity;
 import com.example.mailbox.ui.main.MainActivity;
 import com.example.mailbox.util.NetworkUtil;
+import com.example.mailbox.util.UserUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,13 +79,12 @@ public class LoginActivity extends AppCompatActivity {
                 enableViews(true);
 
                 // save token to database
-                Database db = Database.getInstance(context);
+                UserDatabase db = UserDatabase.getInstance(context);
                 db.saveJWT(username, response.headers().get("Authorization"));
                 db.close();
 
-                // start mailbox activity
-                Intent intent = new Intent(getApplicationContext(), MailboxActivity.class);
-                startActivity(intent);
+                // download user data and start Mailbox activity
+                UserUtil.downloadUserData(context, true);
                 finish();
             }
 

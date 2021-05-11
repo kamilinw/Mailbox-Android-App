@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.mailbox.R;
-import com.example.mailbox.data.Database;
+import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.ui.auth.LoginActivity;
 import com.example.mailbox.ui.mailbox.MailboxActivity;
 
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Database db = Database.getInstance(getApplicationContext());
+        UserDatabase db = UserDatabase.getInstance(getApplicationContext());
         if (db.isUserLoggedIn()){
             db.close();
             Intent intent = new Intent(getApplicationContext(), MailboxActivity.class);

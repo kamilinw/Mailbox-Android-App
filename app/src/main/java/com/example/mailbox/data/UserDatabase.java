@@ -6,17 +6,24 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class Database extends SQLiteOpenHelper {
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
+public class UserDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "mailbox_users";
     public static final int DATABASE_VERSION = 1;
     private final Context context;
-    private static Database instance;
+    private static UserDatabase instance;
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + DATABASE_NAME +
                     " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "username TEXT NOT NULL, email TEXT, " +
+                    "username TEXT NOT NULL, " +
+                    "email TEXT, " +
                     "jwt TEXT NOT NULL, " +
                     "mailbox_ids TEXT )";
 
@@ -27,7 +34,7 @@ public class Database extends SQLiteOpenHelper {
                     "INSERT INTO " + DATABASE_NAME +
                     " (username,jwt) VALUES ('','')";
 
-    public Database (Context context){
+    public UserDatabase(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -55,9 +62,9 @@ public class Database extends SQLiteOpenHelper {
     //TODO reset database,
     // add Email and mailboxes (invokes setters), getters and setters
 
-    public static synchronized Database getInstance(final Context c) {
+    public static synchronized UserDatabase getInstance(final Context c) {
         if (instance == null) {
-            instance = new Database(c.getApplicationContext());
+            instance = new UserDatabase(c.getApplicationContext());
         }
         return instance;
     }
@@ -92,5 +99,54 @@ public class Database extends SQLiteOpenHelper {
         String token = getJwtToken();
 
         return token != null;
+    }
+
+    public String getUsername() {
+        Cursor cursor = getReadableDatabase()
+                .query(DATABASE_NAME,
+                        new String[]{"username"},
+                        "id = 1",
+                        null,
+                        null,
+                        null,
+                        null);
+        cursor.moveToFirst();
+        String username = "";
+        username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+        cursor.close();
+        return username.isEmpty() ? null : username;
+    }
+
+    public void saveUser(String username, String email, List<Long> mailboxIds) {
+        String jsonIds = new Gson().toJson(mailboxIds);
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("username",username);
+        cv.put("email", email);
+        cv.put("mailbox_ids", jsonIds);
+        db.update(DATABASE_NAME, cv, "id=1", null);
+        db.close();
+    }
+
+    public List<Long> getMailboxIds(){
+        Cursor cursor = getReadableDatabase()
+                .query(DATABASE_NAME,
+                        new String[]{"mailbox_ids"},
+                        "id = 1",
+                        null,
+                        null,
+                        null,
+                        null);
+        cursor.moveToFirst();
+        String jsonIds = "";
+        jsonIds = cursor.getString(cursor.getColumnIndexOrThrow("mailbox_ids"));
+        cursor.close();
+
+        if (jsonIds == null)
+            return null;
+
+        Type listType = new TypeToken<List<Long>>(){}.getType();
+
+        return new Gson().fromJson(jsonIds, listType);
     }
 }
