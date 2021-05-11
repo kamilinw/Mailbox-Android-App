@@ -1,8 +1,9 @@
-package com.example.mailbox.ui.login;
+package com.example.mailbox.ui.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,6 +17,8 @@ import com.example.mailbox.R;
 import com.example.mailbox.api.AuthRetrofitClient;
 import com.example.mailbox.data.Database;
 import com.example.mailbox.model.UserLoginRequest;
+import com.example.mailbox.ui.mailbox.MailboxActivity;
+import com.example.mailbox.ui.main.MainActivity;
 import com.example.mailbox.util.NetworkUtil;
 
 import retrofit2.Call;
@@ -67,23 +70,23 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                //ErrorResponse errorResponse = response.body();
                 if (response.code() != 200) {
+                    // TODO handle errors
                     Toast.makeText(LoginActivity.this, "Response code: " + response.code(), Toast.LENGTH_LONG).show();
                     enableViews(true);
                     return;
                 }
+                enableViews(true);
 
                 // save token to database
                 Database db = Database.getInstance(context);
                 db.saveJWT(username, response.headers().get("Authorization"));
-                Toast.makeText(LoginActivity.this, db.getJwtToken(), Toast.LENGTH_LONG).show();
                 db.close();
 
-                // TODO create intent to logged user page
-
-                enableViews(true);
-
+                // start mailbox activity
+                Intent intent = new Intent(getApplicationContext(), MailboxActivity.class);
+                startActivity(intent);
+                finish();
             }
 
             @Override
@@ -130,5 +133,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
 

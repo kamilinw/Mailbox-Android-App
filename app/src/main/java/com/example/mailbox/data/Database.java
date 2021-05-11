@@ -15,10 +15,17 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + DATABASE_NAME +
-                    " (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, email TEXT, jwt TEXT NOT NULL, mailbox_ids TEXT )";
+                    " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "username TEXT NOT NULL, email TEXT, " +
+                    "jwt TEXT NOT NULL, " +
+                    "mailbox_ids TEXT )";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + DATABASE_NAME;
+                    "DROP TABLE IF EXISTS " + DATABASE_NAME;
+
+    private static final String SQL_INSERT_EMPTY_ENTRY =
+                    "INSERT INTO " + DATABASE_NAME +
+                    " (username,jwt) VALUES ('','')";
 
     public Database (Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -28,13 +35,21 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
-        db.execSQL("INSERT INTO " + DATABASE_NAME + " (username,jwt) VALUES ('','')");
+        db.execSQL(SQL_INSERT_EMPTY_ENTRY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
+    }
+
+    public void resetDatabase(Context context){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(SQL_INSERT_EMPTY_ENTRY);
+        db.close();
     }
 
     //TODO reset database,
@@ -49,7 +64,13 @@ public class Database extends SQLiteOpenHelper {
 
     public String getJwtToken(){
         Cursor cursor = getReadableDatabase()
-                .query(DATABASE_NAME, new String[]{"jwt"}, "id = 1", null, null, null, null);
+                .query(DATABASE_NAME,
+                        new String[]{"jwt"},
+                        "id = 1",
+                        null,
+                        null,
+                        null,
+                        null);
         cursor.moveToFirst();
         String retrievedToken = "";
 
@@ -65,5 +86,11 @@ public class Database extends SQLiteOpenHelper {
         cv.put("jwt", jwt);
         db.update(DATABASE_NAME, cv, "id=1", null);
         db.close();
+    }
+
+    public boolean isUserLoggedIn() {
+        String token = getJwtToken();
+
+        return token != null;
     }
 }
