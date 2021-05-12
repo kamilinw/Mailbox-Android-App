@@ -21,6 +21,12 @@
     <string name="navigation_drawer_open">Otwórz menu</string>
     <string name="navigation_drawer_close">Zamknij menu</string>
     <string name="mailbox_name">Nazwa skrzynki</string>
+    <string name="battery">Bateria: </string>
+    <string name="humidity">Wilgotność: </string>
+    <string name="temperature">Temperatura: </string>
+    <string name="pressure">Ciśnienie: </string>
+    <string name="click_to_show_delivery_dates">Naciśnij aby zobaczyć daty otrzymania listu</string>
+
 
 
 </resources>

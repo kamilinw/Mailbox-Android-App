@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 
 import com.example.mailbox.model.Mailbox;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class MailboxDatabase extends SQLiteOpenHelper {
@@ -148,4 +150,25 @@ public class MailboxDatabase extends SQLiteOpenHelper {
     }
 
 
+    public Mailbox getMailboxById(Long mailboxId) {
+        String historyJson = getMailboxField(MailboxDatabase.COLUMN_NAME_MAIL_HISTORY, mailboxId);
+
+        Type listType = new TypeToken<List<String>>(){}.getType();
+        List<String> mailHistory = new Gson().fromJson(historyJson, listType);
+
+        Mailbox mailbox = new Mailbox(
+                Long.valueOf((Integer)getMailboxField(MailboxDatabase.COLUMN_NAME_ID, mailboxId)),
+                false,
+                getMailboxField(MailboxDatabase.COLUMN_NAME_NAME, mailboxId),
+                mailHistory,
+                false,
+                getMailboxField(MailboxDatabase.COLUMN_NAME_BATTERY, mailboxId),
+                getMailboxField(MailboxDatabase.COLUMN_NAME_TEMPERATURE, mailboxId),
+                getMailboxField(MailboxDatabase.COLUMN_NAME_PRESSURE, mailboxId),
+                getMailboxField(MailboxDatabase.COLUMN_NAME_HUMIDITY, mailboxId)
+
+                );
+
+        return mailbox;
+    }
 }

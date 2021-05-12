@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.mailbox.R;
 import com.example.mailbox.data.MailboxDatabase;
@@ -22,7 +24,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private ArrayAdapter<String> adapter ;
+    private MailboxListAdapter adapter ;
     View rootView;
 
     public HomeFragment() {
@@ -52,22 +54,29 @@ public class HomeFragment extends Fragment {
         MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(getContext());
 
         List<Long> mailboxIds = userDatabase.getMailboxIds();
-        ArrayList<String> mailboxNames = new ArrayList<>();
+        ArrayList<Mailbox> mailboxes = new ArrayList<>();
         if (mailboxIds != null){
             for (Long mailboxId: mailboxIds) {
-                mailboxNames.add(mailboxDatabase.getMailboxField(MailboxDatabase.COLUMN_NAME_NAME, mailboxId));
+                mailboxes.add(mailboxDatabase.getMailboxById(mailboxId));
             }
         } else {
-            mailboxNames.add("Brak skrzynek");
+            // TODO do sth when there is no mailboxes
         }
 
         userDatabase.close();
         mailboxDatabase.close();
 
-        adapter = new ArrayAdapter<String>(getContext(), R.layout.listview_mailbox_layout, mailboxNames);
+        adapter = new MailboxListAdapter(getContext(), R.layout.listview_mailbox_layout, mailboxes);
 
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // new intent, id as intent param
+                Toast.makeText(getContext(), mailboxIds.get(position).toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }
