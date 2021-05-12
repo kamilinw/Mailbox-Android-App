@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.mailbox.api.MailboxRetrofitClient;
+import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.model.UserResponse;
@@ -20,8 +21,11 @@ import retrofit2.Response;
 public class UserUtil {
 
     public static void logoutUser(Context context){
-        UserDatabase db = UserDatabase.getInstance(context);
-        db.resetDatabase(context);
+        MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(context);
+        mailboxDatabase.resetDatabase();
+
+        UserDatabase userDatabase = UserDatabase.getInstance(context);
+        userDatabase.resetDatabase();
     }
 
     public static void downloadUserData(Context context, boolean isLoggingIn){
@@ -45,25 +49,22 @@ public class UserUtil {
 
                 UserResponse userResponse = response.body();
 
-
-
-                // TODO save data to database
+                // save data to database
+                MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(context);
                 List<Long> mailboxIds = new ArrayList<>();
                 for (Mailbox mailbox: userResponse.getMailboxes() ) {
                     mailboxIds.add(mailbox.getMailboxId());
+                    mailboxDatabase.saveMailbox(mailbox);
                 }
-
                 UserDatabase userDatabase = UserDatabase.getInstance(context);
                 userDatabase.saveUser(
                         userResponse.getUsername(),
                         userResponse.getEmail(),
                         mailboxIds
                 );
-
-
-
-                Toast.makeText(context, "success! " + userDatabase.getMailboxIds().toString() , Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "success! " + mailboxDatabase.getMailboxField(MailboxDatabase.COLUMN_NAME_TEMPERATURE, userDatabase.getMailboxIds().get(0)), Toast.LENGTH_LONG).show();
                 userDatabase.close();
+                mailboxDatabase.close();
 
                 if (isLoggingIn){
                     Intent intent = new Intent(context, MailboxActivity.class);

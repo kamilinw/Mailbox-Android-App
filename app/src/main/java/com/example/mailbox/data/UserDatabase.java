@@ -51,7 +51,7 @@ public class UserDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void resetDatabase(Context context){
+    public void resetDatabase(){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(SQL_DELETE_ENTRIES);
         db.execSQL(SQL_CREATE_ENTRIES);

@@ -11,8 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.mailbox.R;
+import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.databinding.FragmentHomeBinding;
+import com.example.mailbox.model.Mailbox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,25 +49,22 @@ public class HomeFragment extends Fragment {
         ListView listView = rootView.findViewById(R.id.mailboxesListView);
 
         UserDatabase userDatabase = UserDatabase.getInstance(getContext());
+        MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(getContext());
 
-        //String mailboxes[] = {"Mercedes", "Fiat", "Ferrari", "Aston Martin", "Lamborghini", "Skoda", "Volkswagen", "Audi", "Citroen"};
-
-        ArrayList<Long> mailboxes = new ArrayList<>();
         List<Long> mailboxIds = userDatabase.getMailboxIds();
+        ArrayList<String> mailboxNames = new ArrayList<>();
         if (mailboxIds != null){
-            mailboxes.addAll(mailboxIds);
+            for (Long mailboxId: mailboxIds) {
+                mailboxNames.add(mailboxDatabase.getMailboxField(MailboxDatabase.COLUMN_NAME_NAME, mailboxId));
+            }
         } else {
-            mailboxes.add(-1L);
+            mailboxNames.add("Brak skrzynek");
         }
+
         userDatabase.close();
+        mailboxDatabase.close();
 
-        ArrayList<String> list = new ArrayList<>();
-
-        for (Long mailboxId: mailboxes) {
-            list.add(mailboxId.toString());
-        }
-
-        adapter = new ArrayAdapter<String>(getContext(), R.layout.listview_mailbox_layout, list);
+        adapter = new ArrayAdapter<String>(getContext(), R.layout.listview_mailbox_layout, mailboxNames);
 
         listView.setAdapter(adapter);
 
