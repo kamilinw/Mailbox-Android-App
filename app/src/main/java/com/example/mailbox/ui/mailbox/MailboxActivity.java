@@ -34,6 +34,7 @@ public class MailboxActivity extends AppCompatActivity implements NavigationView
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMailboxBinding binding;
     DrawerLayout drawer;
+    String mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,4 +128,6 @@ public class MailboxActivity extends AppCompatActivity implements NavigationView
             super.onBackPressed();
         }
     }
+
+
 }

@@ -15,7 +15,7 @@
     <string name="nav_header_desc">Zdjęcie profilowe</string>
     <string name="nav_header_title">Nazwa użytkownika</string>
     <string name="nav_header_subtitle">Adres e-mail</string>
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Moje skrzynki</string>
     <string name="menu_profile">Profil</string>
     <string name="menu_about">O aplikacji</string>
     <string name="navigation_drawer_open">Otwórz menu</string>
@@ -26,7 +26,7 @@
     <string name="temperature">Temperatura: </string>
     <string name="pressure">Ciśnienie: </string>
     <string name="click_to_show_delivery_dates">Naciśnij aby zobaczyć daty otrzymania listu</string>
-
+    <string name="logout">Wyloguj się</string>
 
 
 </resources>

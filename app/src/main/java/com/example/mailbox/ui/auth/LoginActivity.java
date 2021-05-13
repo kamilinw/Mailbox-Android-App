@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginOnClick(View view) {
-        if (!isDataCorrect() || !NetworkUtil.checkInternetConnection(LoginActivity.this)){
+        if (!isDataCorrect() || NetworkUtil.isNoInternetConnection(LoginActivity.this, true)){
             return;
         }
 
