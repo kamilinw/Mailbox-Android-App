@@ -8,19 +8,25 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.mailbox.R;
+import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.model.Mailbox;
 
 import java.util.List;
 
-public class MailboxListAdapter extends ArrayAdapter<Mailbox> {
+public class MailboxListAdapter extends ArrayAdapter<Long> {
 
     private int resourceLayout;
     private Context mContext;
 
-    public MailboxListAdapter(Context context, int resource, List<Mailbox> mailboxes) {
-        super(context, resource, mailboxes);
+    public MailboxListAdapter(Context context, int resource, List<Long> mailboxIds) {
+        super(context, resource, mailboxIds);
         this.resourceLayout = resource;
         this.mContext = context;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 
     @Override
@@ -34,7 +40,14 @@ public class MailboxListAdapter extends ArrayAdapter<Mailbox> {
             v = vi.inflate(resourceLayout, null);
         }
 
-        Mailbox mailbox = getItem(position);
+        Long id = getItem(position);
+        Mailbox mailbox = null;
+        if (id > 0){
+            MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(mContext);
+            mailbox = mailboxDatabase.getMailboxById(id);
+        }
+
+
 
         if (mailbox != null) {
             TextView mailboxNameTextView = (TextView) v.findViewById(R.id.mailboxNameTextView);
@@ -42,6 +55,8 @@ public class MailboxListAdapter extends ArrayAdapter<Mailbox> {
             TextView temperatureTextView = (TextView) v.findViewById(R.id.temperatureTextView);
             TextView pressureTextView = (TextView) v.findViewById(R.id.pressureTextView);
             TextView humidityTextView = (TextView) v.findViewById(R.id.humidityTextView);
+            TextView newMailTextView = (TextView) v.findViewById(R.id.newMailTextView);
+            TextView noticeTextView = (TextView) v.findViewById(R.id.noticeTextView);
 
             if (mailboxNameTextView != null) {
                 mailboxNameTextView.setText(mailbox.getName());
@@ -58,6 +73,18 @@ public class MailboxListAdapter extends ArrayAdapter<Mailbox> {
             }
             if (humidityTextView != null) {
                 humidityTextView.setText(mailbox.getHumidity().toString());
+            }
+            if (newMailTextView != null) {
+                if (mailbox.isNewMail())
+                    newMailTextView.setVisibility(View.VISIBLE);
+                else
+                    newMailTextView.setVisibility(View.GONE);
+            }
+            if (noticeTextView != null) {
+                if (mailbox.isAttemptedDeliveryNoticePresent())
+                    noticeTextView.setVisibility(View.VISIBLE);
+                else
+                    noticeTextView.setVisibility(View.GONE);
             }
         }
 

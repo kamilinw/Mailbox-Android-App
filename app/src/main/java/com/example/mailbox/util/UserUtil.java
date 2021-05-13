@@ -2,7 +2,11 @@ package com.example.mailbox.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.example.mailbox.api.MailboxRetrofitClient;
 import com.example.mailbox.data.MailboxDatabase;
@@ -10,6 +14,7 @@ import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.model.UserResponse;
 import com.example.mailbox.ui.mailbox.MailboxActivity;
+import com.example.mailbox.ui.mailbox.MailboxListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +33,7 @@ public class UserUtil {
         userDatabase.resetDatabase();
     }
 
-    public static void downloadUserData(Context context, boolean isLoggingIn){
+    public static <T extends BaseAdapter> void downloadUserData(Context context, boolean isLoggingIn, @Nullable T adapter){
         UserDatabase db = UserDatabase.getInstance(context);
         String token = db.getJwtToken();
         if (token == null)
@@ -47,6 +52,10 @@ public class UserUtil {
                     return;
                 }
 
+                // TODO Authentication Header
+
+
+
                 UserResponse userResponse = response.body();
 
                 // save data to database
@@ -57,14 +66,25 @@ public class UserUtil {
                     mailboxDatabase.saveMailbox(mailbox);
                 }
                 UserDatabase userDatabase = UserDatabase.getInstance(context);
+
+
+                String token = response.headers().get("Authorization");
+                if (token != null){
+                    userDatabase.saveJWT(userResponse.getUsername(),token);
+                }
+
                 userDatabase.saveUser(
                         userResponse.getUsername(),
                         userResponse.getEmail(),
                         mailboxIds
                 );
-                Toast.makeText(context, "success! " + mailboxDatabase.getMailboxField(MailboxDatabase.COLUMN_NAME_TEMPERATURE, userDatabase.getMailboxIds().get(0)), Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "success! " + userResponse.getMailboxes().get(0).getBattery(), Toast.LENGTH_LONG).show();
                 userDatabase.close();
                 mailboxDatabase.close();
+
+                if (adapter != null){
+                    adapter.notifyDataSetChanged();
+                }
 
                 if (isLoggingIn){
                     Intent intent = new Intent(context, MailboxActivity.class);

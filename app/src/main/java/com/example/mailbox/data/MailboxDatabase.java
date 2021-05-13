@@ -95,7 +95,10 @@ public class MailboxDatabase extends SQLiteOpenHelper {
         cv.put(COLUMN_NAME_TEMPERATURE, mailbox.getTemperature());
         cv.put(COLUMN_NAME_PRESSURE, mailbox.getPressure());
         cv.put(COLUMN_NAME_HUMIDITY, mailbox.getHumidity());
-        Long id = db.insert(DATABASE_NAME, null, cv);
+        int rowsUpdated = db.update(DATABASE_NAME,cv,COLUMN_NAME_ID+" = ?", new String[]{mailbox.getMailboxId().toString()});
+        long id = 0L;
+        if (rowsUpdated == 0)
+             id = db.insert(DATABASE_NAME, null, cv);
         db.close();
         return id;
     }
@@ -158,10 +161,10 @@ public class MailboxDatabase extends SQLiteOpenHelper {
 
         Mailbox mailbox = new Mailbox(
                 Long.valueOf((Integer)getMailboxField(MailboxDatabase.COLUMN_NAME_ID, mailboxId)),
-                false,
+                (Integer) getMailboxField(MailboxDatabase.COLUMN_NAME_NEW_MAIL, mailboxId) != 0,
                 getMailboxField(MailboxDatabase.COLUMN_NAME_NAME, mailboxId),
                 mailHistory,
-                false,
+                (Integer) getMailboxField(MailboxDatabase.COLUMN_NAME_NOTICE, mailboxId) != 0,
                 getMailboxField(MailboxDatabase.COLUMN_NAME_BATTERY, mailboxId),
                 getMailboxField(MailboxDatabase.COLUMN_NAME_TEMPERATURE, mailboxId),
                 getMailboxField(MailboxDatabase.COLUMN_NAME_PRESSURE, mailboxId),

@@ -4,15 +4,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/mailboxNameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="10dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
+        android:background="@color/orange_700"
         android:textSize="20sp"
         android:textColor="#000000"
         android:text="@string/mailbox_name">
@@ -20,30 +22,35 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/orange_500">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="1">
             <TextView
+                android:id="@+id/newMailTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:textSize="20sp"
+                android:visibility="gone"
                 android:textColor="#000000"
-                android:text="otrzymano nowy list">
+                android:text="Otrzymano nowy list">
             </TextView>
 
             <TextView
+                android:id="@+id/noticeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
+                android:visibility="gone"
                 android:textSize="20sp"
                 android:textColor="#000000"
                 android:text="List awizowany">
@@ -52,8 +59,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="@color/orange_300"
             android:layout_weight="1">
 
             <LinearLayout
@@ -73,6 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:layout_marginEnd="5dp"
                         android:gravity="end"
                         android:text="@string/battery"
                         android:textColor="#000000" />
@@ -107,6 +116,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:layout_marginEnd="5dp"
                         android:gravity="end"
                         android:text="@string/temperature"
                         android:textColor="#000000" />
@@ -141,6 +151,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:layout_marginEnd="5dp"
                         android:gravity="end"
                         android:text="@string/pressure"
                         android:textColor="#000000" />
@@ -174,6 +185,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:layout_marginEnd="5dp"
                         android:gravity="end"
                         android:text="@string/humidity"
                         android:textColor="#000000" />
@@ -208,7 +220,7 @@
         android:paddingBottom="10dp"
         android:textSize="16sp"
         android:layout_gravity="center"
-        android:textColor="#A8A8A8"
+        android:textColor="#FFFFFF"
         android:text="@string/click_to_show_delivery_dates">
     </TextView>
 

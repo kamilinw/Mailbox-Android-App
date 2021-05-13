@@ -17,6 +17,8 @@ import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.databinding.FragmentHomeBinding;
 import com.example.mailbox.model.Mailbox;
+import com.example.mailbox.util.UserUtil;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +38,6 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
         //setContentView(binding.getRoot());
-
-
-
-
     }
 
     @Override
@@ -54,27 +52,34 @@ public class HomeFragment extends Fragment {
         MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(getContext());
 
         List<Long> mailboxIds = userDatabase.getMailboxIds();
-        ArrayList<Mailbox> mailboxes = new ArrayList<>();
-        if (mailboxIds != null){
-            for (Long mailboxId: mailboxIds) {
-                mailboxes.add(mailboxDatabase.getMailboxById(mailboxId));
-            }
-        } else {
-            // TODO do sth when there is no mailboxes
+
+        if (mailboxIds == null){
+            mailboxIds = new ArrayList<>();
+            mailboxIds.add(-1L);
         }
 
         userDatabase.close();
         mailboxDatabase.close();
 
-        adapter = new MailboxListAdapter(getContext(), R.layout.listview_mailbox_layout, mailboxes);
+        adapter = new MailboxListAdapter(getContext(), R.layout.listview_mailbox_layout, mailboxIds);
 
         listView.setAdapter(adapter);
 
+        List<Long> finalMailboxIds = mailboxIds;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // new intent, id as intent param
-                Toast.makeText(getContext(), mailboxIds.get(position).toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), finalMailboxIds.get(position).toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        MailboxListAdapter finalAdapter = adapter;
+        FloatingActionButton floatingActionButton = rootView.findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserUtil.downloadUserData(getContext(),false, finalAdapter);
             }
         });
 

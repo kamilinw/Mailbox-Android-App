@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 db.close();
 
                 // download user data and start Mailbox activity
-                UserUtil.downloadUserData(context, true);
+                UserUtil.downloadUserData(context, true, null);
                 finish();
             }
 
