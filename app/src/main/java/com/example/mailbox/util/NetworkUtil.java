@@ -9,11 +9,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.example.mailbox.R;
-import com.example.mailbox.service.RefreshJobService;
 
 import org.jetbrains.annotations.NotNull;
 
 public class NetworkUtil {
+
+    public static final String NOTIFICATION_CHANNEL_ID = "10002";
 
     /**
      * Check if there is an internet connection. If there is not, displays
@@ -50,17 +51,4 @@ public class NetworkUtil {
                 .show();
     }
 
-    // schedule the start of the service every 10 - 30 seconds
-    public static void scheduleJob(Context context) {
-        ComponentName serviceComponent = new ComponentName(context, RefreshJobService.class);
-        JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
-        builder.setMinimumLatency(1 * 1000); // wait at least
-        builder.setOverrideDeadline(3 * 1000); // maximum delay
-        //builder.setPeriodic(10*1000);
-        //builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); // require unmetered network
-        //builder.setRequiresDeviceIdle(true); // device should be idle
-        //builder.setRequiresCharging(false); // we don't care if the device is charging or not
-        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
-        jobScheduler.schedule(builder.build());
-    }
 }

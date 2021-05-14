@@ -1,11 +1,7 @@
 package com.example.mailbox.ui.mailbox;
 
-import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,13 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,19 +23,16 @@ import com.example.mailbox.R;
 import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.databinding.FragmentHomeBinding;
-import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.service.AlarmReceiver;
-import com.example.mailbox.service.CommunicationService;
-import com.example.mailbox.util.NetworkUtil;
 import com.example.mailbox.util.UserUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.common.primitives.Longs;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -50,7 +43,8 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private MailboxListAdapter adapter ;
-    View rootView;
+    Timer timer;
+    private static final String TAG = "HomeFragment";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -64,8 +58,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,8 +68,6 @@ public class HomeFragment extends Fragment {
 
         // For application bar title change
         setHasOptionsMenu(true);
-
-
 
         UserDatabase userDatabase = UserDatabase.getInstance(getContext());
         MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(getContext());
@@ -110,42 +100,40 @@ public class HomeFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserUtil.downloadUserData(getContext(),false, finalAdapter);
+                UserUtil.downloadUserData(getContext(),false, finalAdapter, false);
             }
         });
 
-        /*ScheduledExecutorService scheduler =
-                Executors.newSingleThreadScheduledExecutor();
+        //update UI
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (getActivity() == null)
+                    return;
+                getActivity().runOnUiThread(new Runnable() {
 
-        scheduler.scheduleAtFixedRate
-                (new Runnable() {
+                    @Override
                     public void run() {
-                        UserUtil.downloadUserData(getContext(),false, finalAdapter);
-                        MailboxDatabase mailboxDatabase1 = MailboxDatabase.getInstance(getContext());
-
-                        Intent service = new Intent(getContext(), CommunicationService.class);
-                        long[] ids = Longs.toArray(finalMailboxIds);
-                        service.putExtra("ids", ids);
-                        getContext().startService(service);
+                        if (adapter != null) {
+                            Log.i(TAG, "Update UI");
+                            //adapter.notify();
+                            adapter.notifyDataSetChanged();
+                        }
                     }
-                }, 0, 10, TimeUnit.SECONDS);
+                });
+            }
+        }, 0, 30 * 1000);
 
-
-
-        Calendar now = Calendar.getInstance();
-        now.setTimeInMillis(System.currentTimeMillis());
 
         AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (alarmManager != null) {
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, now.getTimeInMillis(), 20*1000,pendingIntent);
-        }*/
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60*1000,pendingIntent);
+        }
 
-        Intent serviceIntent = new Intent(getContext(), CommunicationService.class);
-        getContext().startService(serviceIntent);
-        NetworkUtil.scheduleJob(getContext());
         return rootView;
     }
 
@@ -153,5 +141,12 @@ public class HomeFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.menu_home));
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPause() {
+        if (timer != null)
+            timer.cancel();
+        super.onPause();
     }
 }
