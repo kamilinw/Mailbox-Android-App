@@ -4,10 +4,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -17,23 +16,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mailbox"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.auth.RegisterActivity" />
 
         <receiver
             android:name=".service.AlarmReceiver"
             android:enabled="true"
-            android:exported="false"/>
-
-
-        <receiver android:name=".service.MyStartServiceReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".service.MyStartServiceReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.mailbox.MailboxActivity" />
+        <activity android:name=".ui.mailbox.MailboxActivity"
+            android:theme="@style/Theme.Mailbox.NoActionBar"/>
         <activity android:name=".ui.auth.LoginActivity" />
-        <activity android:name=".ui.main.MainActivity">
+        <activity android:name=".ui.main.MainActivity"
+            android:theme="@style/Theme.Mailbox.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

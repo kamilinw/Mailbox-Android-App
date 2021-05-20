@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:layout_marginBottom="5dp"
+    android:background="@color/color_700">
 
     <TextView
         android:id="@+id/mailboxNameTextView"
@@ -14,21 +15,23 @@
         android:paddingStart="10dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:background="@color/orange_700"
+        android:layout_marginBottom="1dp"
+        android:background="@color/color_500"
         android:textSize="20sp"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:text="@string/mailbox_name">
     </TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/orange_500">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginRight="1dp"
+            android:background="@color/color_300"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/newMailTextView"
@@ -61,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/orange_300"
+            android:layout_marginLeft="1dp"
+            android:background="@color/color_300"
             android:layout_weight="1">
 
             <LinearLayout
@@ -201,26 +205,25 @@
 
                 </LinearLayout>
 
-
-
             </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-
-
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         android:textSize="16sp"
-        android:layout_gravity="center"
-        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:background="@color/color_300"
+        android:textColor="#373737"
         android:text="@string/click_to_show_delivery_dates">
     </TextView>
 

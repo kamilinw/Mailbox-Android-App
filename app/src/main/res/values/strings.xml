@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Mailbox</string>
-    <string name="log_in_button">Log in</string>
-    <string name="sign_up_button">Sign up</string>
+    <string name="log_in_button">Zaloguj się</string>
+    <string name="sign_up_button">Utwórz konto</string>
     <string name="welcome_text">Welcome to Mailbox App!</string>
     <string name="login_header">Zaloguj się do aplikacji mailbox</string>
     <string name="email">E-mail</string>
@@ -27,6 +27,13 @@
     <string name="pressure">Ciśnienie: </string>
     <string name="click_to_show_delivery_dates">Naciśnij aby zobaczyć daty otrzymania listu</string>
     <string name="logout">Wyloguj się</string>
+    <string name="register_header">Zarejstruj się do aplikacji</string>
+    <string name="wrong_repeat_password">Błędna weryfikacja hasła</string>
+    <string name="repeat_password">Powtórz hasło</string>
+    <string name="wrong_username">Niepoprawna nazwa użytkownika</string>
+    <string name="register_failed_toast">Nie udało się zarejestrować w aplikacji!</string>
+    <string name="register_success_title">Zarejestrowano użytkownika</string>
+    <string name="register_success_message">Na podany adres e-mail wysłano link aktywacyjny. Aktywuj konto aby się zalogować</string>
 
 
 </resources>

@@ -38,6 +38,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // show back button
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         usernameEditText = findViewById(R.id.editTextUsername);
         passwordEditText = findViewById(R.id.editTextPassword);
         loginButton = findViewById(R.id.loginButton);
@@ -100,13 +104,13 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isDataCorrect() {
         boolean dataCorrect = true;
 
-        //email
-        TextView textViewWrongEmail = findViewById(R.id.textViewWrongEmail);
-        if (usernameEditText.getText().toString().equals("")){
-            textViewWrongEmail.setVisibility(View.VISIBLE);
+        // username
+        TextView textViewWrongUsername = findViewById(R.id.textViewWrongUsername);
+        if (usernameEditText.getText().toString().equals("") || usernameEditText.getText().toString().startsWith("mailbox")){
+            textViewWrongUsername.setVisibility(View.VISIBLE);
             dataCorrect = false;
         } else {
-            textViewWrongEmail.setVisibility(View.GONE);
+            textViewWrongUsername.setVisibility(View.GONE);
         }
 
         // password
@@ -137,6 +141,12 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
 

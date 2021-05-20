@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mailbox.HomeFragment"
+    android:background="#ECECEC"
     >
 
 
@@ -26,9 +27,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginStart="0dp"
         android:background="@color/white"
-        android:paddingTop="5dp"
-        android:elevation="15dp"
-        android:paddingBottom="5dp">
+        android:paddingTop="5dp">
 
         <ListView
             android:id="@+id/mailboxesListView"

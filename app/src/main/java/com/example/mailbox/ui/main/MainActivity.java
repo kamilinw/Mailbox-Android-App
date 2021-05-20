@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.mailbox.R;
 import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.ui.auth.LoginActivity;
+import com.example.mailbox.ui.auth.RegisterActivity;
 import com.example.mailbox.ui.mailbox.MailboxActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signupOnClick(View view) {
-        Toast.makeText(getApplicationContext(), "Signing up!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

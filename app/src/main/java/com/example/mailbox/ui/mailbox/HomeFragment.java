@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment {
                     }
                 });
             }
-        }, 0, 30 * 1000);
+        }, 0, 5 * 1000);
 
 
         AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);

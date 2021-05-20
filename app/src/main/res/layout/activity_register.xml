@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".ui.auth.LoginActivity">
+    tools:context=".ui.auth.RegisterActivity"
+    android:background="@color/background">
 
     <ProgressBar
         android:id="@+id/loading"
@@ -39,7 +39,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginBottom="20dp"
             android:padding="15dp"
-            android:text="@string/login_header"
+            android:text="@string/register_header"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
@@ -97,16 +97,68 @@
             android:textSize="18sp"
             android:visibility="gone" />
 
+        <EditText
+            android:id="@+id/editTextRepeatPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:hint="@string/repeat_password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorLink="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textViewEnterRepeatPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/wrong_repeat_password"
+            android:textColor="@color/error_input"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorLink="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textViewWrongEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/wrong_email"
+            android:textColor="@color/error_input"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/createAccountButton"
             android:layout_width="250dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="35dp"
             android:backgroundTint="@color/color_700"
-            android:onClick="loginOnClick"
-            android:text="@string/log_in_button"
+            android:onClick="signupOnClick"
+            android:text="@string/sign_up_button"
             app:strokeColor="#FFFFFF"
             app:strokeWidth="2dp" />
 

@@ -42,11 +42,11 @@ public class NetworkUtil {
     /**
      * Builds an info alert dialog
      * @param context context
-     * @param title Alert dialog title
+     * @param message Alert dialog message
      */
-    public static void infoAlertDialog(Context context, int title){
+    public static void infoAlertDialog(Context context, int message){
         new AlertDialog.Builder(context)
-                .setMessage(title)
+                .setMessage(message)
                 .setPositiveButton("OK",null)
                 .show();
     }
