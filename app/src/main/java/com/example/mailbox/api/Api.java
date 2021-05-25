@@ -1,5 +1,6 @@
 package com.example.mailbox.api;
 
+import com.example.mailbox.model.AddMailboxRequest;
 import com.example.mailbox.model.UserLoginRequest;
 import com.example.mailbox.model.UserRegisterRequest;
 import com.example.mailbox.model.UserResponse;
@@ -26,6 +27,12 @@ public interface Api {
     @POST("registration")
     Call<Void> userRegister(
             @Body UserRegisterRequest userRegisterRequest
+    );
+
+    @POST("api/user/mailbox")
+    Call<Void> addMailbox(
+            @Header("Authorization") String token,
+            @Body AddMailboxRequest addMailboxRequest
     );
 
 }

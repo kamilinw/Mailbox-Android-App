@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MailboxDatabase extends SQLiteOpenHelper {
@@ -86,15 +87,19 @@ public class MailboxDatabase extends SQLiteOpenHelper {
     public Long saveMailbox(Mailbox mailbox){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
+
         cv.put(COLUMN_NAME_ID, mailbox.getMailboxId());
         cv.put(COLUMN_NAME_NAME, mailbox.getName());
+        List<String> mailHistory = mailbox.getMailHistory();
+        if (mailHistory == null)
+            mailHistory = new ArrayList<>();
         cv.put(COLUMN_NAME_MAIL_HISTORY, new Gson().toJson(mailbox.getMailHistory()));
         cv.put(COLUMN_NAME_NEW_MAIL, mailbox.isNewMail());
         cv.put(COLUMN_NAME_NOTICE, mailbox.isAttemptedDeliveryNoticePresent());
-        cv.put(COLUMN_NAME_BATTERY, mailbox.getBattery());
-        cv.put(COLUMN_NAME_TEMPERATURE, mailbox.getTemperature());
-        cv.put(COLUMN_NAME_PRESSURE, mailbox.getPressure());
-        cv.put(COLUMN_NAME_HUMIDITY, mailbox.getHumidity());
+        cv.put(COLUMN_NAME_BATTERY, mailbox.getBattery()==null? 0D:mailbox.getBattery());
+        cv.put(COLUMN_NAME_TEMPERATURE, mailbox.getTemperature()==null? 0D:mailbox.getTemperature());
+        cv.put(COLUMN_NAME_PRESSURE, mailbox.getPressure()==null? 0D:mailbox.getPressure());
+        cv.put(COLUMN_NAME_HUMIDITY, mailbox.getHumidity()==null? 0D:mailbox.getHumidity());
         int rowsUpdated = db.update(DATABASE_NAME,cv,COLUMN_NAME_ID+" = ?", new String[]{mailbox.getMailboxId().toString()});
         long id = 0L;
         if (rowsUpdated == 0)
@@ -154,6 +159,19 @@ public class MailboxDatabase extends SQLiteOpenHelper {
 
 
     public Mailbox getMailboxById(Long mailboxId) {
+        Cursor cursor = getReadableDatabase()
+                .query(DATABASE_NAME,
+                        null,
+                        "id = ?",
+                        new String[]{mailboxId.toString()},
+                        null,
+                        null,
+                        null);
+
+        if (cursor.getCount() == 0){
+            return null;
+        }
+
         String historyJson = getMailboxField(MailboxDatabase.COLUMN_NAME_MAIL_HISTORY, mailboxId);
 
         Type listType = new TypeToken<List<String>>(){}.getType();

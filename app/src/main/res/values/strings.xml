@@ -34,6 +34,13 @@
     <string name="register_failed_toast">Nie udało się zarejestrować w aplikacji!</string>
     <string name="register_success_title">Zarejestrowano użytkownika</string>
     <string name="register_success_message">Na podany adres e-mail wysłano link aktywacyjny. Aktywuj konto aby się zalogować</string>
+    <string name="add_mailbox_header">Dodaj nową skrzynkę</string>
+    <string name="mailbox_username">Nazwa użytkownika skrzynki</string>
+    <string name="mailbox_password">Hasło skrzynki</string>
+    <string name="wrong_mailbox_name">Wprowadź nazwę skrzynki</string>
+    <string name="add_mailbox_button">Dodaj skrzynkę</string>
+    <string name="add_mailbox_description">Aby dodać nową skrzynkę wprowaź nazwę użytkownika skrzynki oraz hasło znajdujące się na urządzeniu. Dodatkowo wprowadź swoją nazwę skrzynki</string>
+    <string name="no_token">Nie udało się uwierzytelnić użytkownika. Wylogowano z aplikacji</string>
 
 
 </resources>

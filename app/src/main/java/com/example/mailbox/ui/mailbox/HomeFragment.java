@@ -1,7 +1,5 @@
 package com.example.mailbox.ui.mailbox;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,8 +23,8 @@ import com.example.mailbox.R;
 import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.databinding.FragmentHomeBinding;
-import com.example.mailbox.service.AlarmReceiver;
 import com.example.mailbox.util.UserUtil;
+import com.example.mailbox.util.Util;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,11 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class HomeFragment extends Fragment {
 
@@ -96,15 +91,34 @@ public class HomeFragment extends Fragment {
         });
 
         MailboxListAdapter finalAdapter = adapter;
-        FloatingActionButton floatingActionButton = rootView.findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton refreshButton = rootView.findViewById(R.id.refreshButton);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserUtil.downloadUserData(getContext(),false, finalAdapter, false);
             }
         });
 
-        //update UI
+        ImageButton addMailboxButton = rootView.findViewById(R.id.addMailboxButton);
+        addMailboxButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddMailboxActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //update UI every 5 seconds
+        updateListView(5);
+
+        if (getContext()!= null)
+            Util.setAlarm(getContext());
+
+        return rootView;
+    }
+
+    private void updateListView(int period) {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -123,18 +137,7 @@ public class HomeFragment extends Fragment {
                     }
                 });
             }
-        }, 0, 5 * 1000);
-
-
-        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(getContext(), AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        if (alarmManager != null) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60*1000,pendingIntent);
-        }
-
-        return rootView;
+        }, 0, period * 1000);
     }
 
     @Override

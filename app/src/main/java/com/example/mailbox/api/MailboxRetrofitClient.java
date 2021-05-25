@@ -12,7 +12,7 @@ public class MailboxRetrofitClient {
 
     private Retrofit retrofit;
     // TODO move url to resources
-    private static final String BASE_URL = "http://192.168.1.102:8080/";
+    private static final String BASE_URL = "http://192.168.1.118:8080/";
     private static MailboxRetrofitClient mInstance;
 
 
