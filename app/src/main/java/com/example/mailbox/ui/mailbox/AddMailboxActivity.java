@@ -120,8 +120,8 @@ public class AddMailboxActivity extends AppCompatActivity {
 
                 enableViews(true);
 
-                UserUtil.downloadUserData(getApplicationContext(), true, null, false);
-
+                UserUtil.downloadUserData(getApplicationContext(), false, null, false);
+                finish();
             }
 
             @Override

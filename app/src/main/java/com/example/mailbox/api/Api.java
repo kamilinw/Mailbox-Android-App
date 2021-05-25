@@ -8,9 +8,11 @@ import com.example.mailbox.model.UserResponse;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface Api {
 
@@ -33,6 +35,12 @@ public interface Api {
     Call<Void> addMailbox(
             @Header("Authorization") String token,
             @Body AddMailboxRequest addMailboxRequest
+    );
+
+    @DELETE("api/user/mailbox/{id}")
+    Call<UserResponse> deleteMailbox(
+            @Header("Authorization") String token,
+            @Path("id") Long id
     );
 
 }

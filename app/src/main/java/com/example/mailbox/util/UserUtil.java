@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -173,4 +175,66 @@ public class UserUtil {
     }
 
 
+    public static <T extends BaseAdapter> void deleteMailbox(Context context, Long id, T adapter) {
+
+        UserDatabase db = UserDatabase.getInstance(context);
+        String token = db.getJwtToken();
+        if (token == null)
+            return;
+
+        Call<UserResponse> call = MailboxRetrofitClient
+                .getInstance(token).getApi().deleteMailbox(token, id);
+
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    // TODO handle errors
+
+                    if (response.code() == 403)
+                        logoutUser(context);
+
+                    Toast.makeText(context, "Response code: " + response.code(), Toast.LENGTH_LONG).show();
+
+                    return;
+                }
+
+                UserResponse userResponse = response.body();
+
+                // save data to database
+                MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(context);
+                List<Long> mailboxIds = new ArrayList<>();
+                for (Mailbox mailbox: userResponse.getMailboxes() ) {
+                    mailboxIds.add(mailbox.getMailboxId());
+                    mailboxDatabase.saveMailbox(mailbox);
+                }
+
+                // save new token to database
+                UserDatabase userDatabase = UserDatabase.getInstance(context);
+                String token = response.headers().get("Authorization");
+                if (token != null){
+                    userDatabase.saveJWT(userResponse.getUsername(),token);
+                }
+
+                userDatabase.saveUser(
+                        userResponse.getUsername(),
+                        userResponse.getEmail(),
+                        mailboxIds
+                );
+                userDatabase.close();
+                mailboxDatabase.close();
+
+                //update ui
+                if (adapter != null){
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Toast.makeText(context, "Nie udało się pobrać danych!", Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
 }

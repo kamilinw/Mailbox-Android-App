@@ -11,12 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.mailbox.R;
@@ -33,11 +35,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private MailboxListAdapter adapter ;
+    ListView listView;
+    List<Long> mailboxIds;
     Timer timer;
     private static final String TAG = "HomeFragment";
 
@@ -57,46 +62,48 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-
-        // Inflate the layout for this fragment
-        ListView listView = rootView.findViewById(R.id.mailboxesListView);
-
         // For application bar title change
         setHasOptionsMenu(true);
 
-        UserDatabase userDatabase = UserDatabase.getInstance(getContext());
-        MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(getContext());
+        // Inflate the layout for this fragment
+        listView = rootView.findViewById(R.id.mailboxesListView);
 
-        List<Long> mailboxIds = userDatabase.getMailboxIds();
-
-        if (mailboxIds == null){
-            mailboxIds = new ArrayList<>();
-            mailboxIds.add(-1L);
-        }
-
-        userDatabase.close();
-        mailboxDatabase.close();
-
-        adapter = new MailboxListAdapter(getContext(), R.layout.listview_mailbox_layout, mailboxIds);
-
-        listView.setAdapter(adapter);
+        setListViewAdapter();
 
         List<Long> finalMailboxIds = mailboxIds;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // new intent, id as intent param
-                Toast.makeText(getContext(), finalMailboxIds.get(position).toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), mailboxIds.get(position).toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        MailboxListAdapter finalAdapter = adapter;
+        // Delete mailbox on long click
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                PopupMenu popupMenu = new PopupMenu(getContext(), view);
+                popupMenu.inflate(R.menu.delete_mailbox_menu);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        UserUtil.deleteMailbox(getContext(), mailboxIds.get(position), adapter);
+                        return true;
+                    }
+                });
+                popupMenu.show();
+                return true;
+            }
+        });
+
         ImageButton refreshButton = rootView.findViewById(R.id.refreshButton);
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserUtil.downloadUserData(getContext(),false, finalAdapter, false);
+                UserUtil.downloadUserData(getContext(),false, adapter, false);
             }
         });
 
@@ -106,6 +113,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddMailboxActivity.class);
                 startActivity(intent);
+                onPause();
             }
         });
 
@@ -116,6 +124,25 @@ public class HomeFragment extends Fragment {
             Util.setAlarm(getContext());
 
         return rootView;
+    }
+
+    private void setListViewAdapter() {
+        UserDatabase userDatabase = UserDatabase.getInstance(getContext());
+        MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(getContext());
+
+        mailboxIds = userDatabase.getMailboxIds();
+        mailboxIds = mailboxIds.stream().sorted().collect(Collectors.toList());
+
+        if (mailboxIds == null){
+            mailboxIds = new ArrayList<>();
+            mailboxIds.add(-1L);
+        }
+
+        userDatabase.close();
+        mailboxDatabase.close();
+
+        adapter = new MailboxListAdapter(getContext(), R.layout.listview_mailbox_layout, mailboxIds);
+        listView.setAdapter(adapter);
     }
 
     private void updateListView(int period) {
@@ -132,6 +159,7 @@ public class HomeFragment extends Fragment {
                         if (adapter != null) {
                             Log.i(TAG, "Update UI");
                             //adapter.notify();
+                            setListViewAdapter();
                             adapter.notifyDataSetChanged();
                         }
                     }
@@ -151,5 +179,12 @@ public class HomeFragment extends Fragment {
         if (timer != null)
             timer.cancel();
         super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        //setListViewAdapter();
+        updateListView(5);
+        super.onResume();
     }
 }
