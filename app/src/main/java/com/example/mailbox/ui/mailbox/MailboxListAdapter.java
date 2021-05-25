@@ -1,6 +1,7 @@
 package com.example.mailbox.ui.mailbox;
 
 import android.content.Context;
+import android.icu.text.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,15 @@ import android.widget.TextView;
 import com.example.mailbox.R;
 import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.model.Mailbox;
+import com.example.mailbox.util.Util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MailboxListAdapter extends ArrayAdapter<Long> {
 
@@ -57,6 +65,7 @@ public class MailboxListAdapter extends ArrayAdapter<Long> {
             TextView humidityTextView = (TextView) v.findViewById(R.id.humidityTextView);
             TextView newMailTextView = (TextView) v.findViewById(R.id.newMailTextView);
             TextView noticeTextView = (TextView) v.findViewById(R.id.noticeTextView);
+            TextView newMailDateTextView = (TextView) v.findViewById(R.id.newMailDateTextView);
 
             if (mailboxNameTextView != null) {
                 mailboxNameTextView.setText(mailbox.getName());
@@ -75,16 +84,25 @@ public class MailboxListAdapter extends ArrayAdapter<Long> {
                 humidityTextView.setText(mailbox.getHumidity().toString());
             }
             if (newMailTextView != null) {
-                if (mailbox.isNewMail())
+                if (mailbox.isNewMail()){
                     newMailTextView.setVisibility(View.VISIBLE);
-                else
-                    newMailTextView.setVisibility(View.GONE);
+                    newMailDateTextView.setVisibility(View.VISIBLE);
+
+                    String rawDateString = mailbox.getMailHistory().get(mailbox.getMailHistory().size()-1);
+                    String date = Util.formatStringDate(rawDateString);
+                    newMailDateTextView.setText(getContext().getString(R.string.recieved, date));
+                }
+                else{
+                    newMailTextView.setVisibility(View.INVISIBLE);
+                    newMailDateTextView.setVisibility(View.INVISIBLE);
+                }
+
             }
             if (noticeTextView != null) {
                 if (mailbox.isAttemptedDeliveryNoticePresent())
                     noticeTextView.setVisibility(View.VISIBLE);
                 else
-                    noticeTextView.setVisibility(View.GONE);
+                    noticeTextView.setVisibility(View.INVISIBLE);
             }
         }
 

@@ -42,6 +42,10 @@
     <string name="add_mailbox_description">Aby dodać nową skrzynkę wprowaź nazwę użytkownika skrzynki oraz hasło znajdujące się na urządzeniu. Dodatkowo wprowadź swoją nazwę skrzynki</string>
     <string name="no_token">Nie udało się uwierzytelnić użytkownika. Wylogowano z aplikacji</string>
     <string name="delete_mailbox">Usuń skrzynkę</string>
+    <string name="recieved">"otrzymano: %s"</string>
+    <string name="mail_dates_history">Daty otrzymania listów</string>
+    <string name="application_info">Aplikacja powstała jako część pracy magisterskiej realizowanej na Politechnice Rzeszowskiej, na kierunku Mechatronika. Tematem pracy było zaprojektowanie skrzynki na listy, która będzie powiadamiać użytkownika o otrzymanej korespondencji za pośrednictwem aplikacji mobilnej. Autorem aplikacji jest Kamil Wnęk.</string>
+
 
 
 </resources>

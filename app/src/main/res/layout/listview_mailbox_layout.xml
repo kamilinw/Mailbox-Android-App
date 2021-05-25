@@ -5,227 +5,251 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginBottom="5dp"
-    android:background="@color/color_700">
-
-    <TextView
-        android:id="@+id/mailboxNameTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_marginBottom="1dp"
-        android:background="@color/color_500"
-        android:textSize="20sp"
-        android:textColor="#FFFFFF"
-        android:text="@string/mailbox_name">
-    </TextView>
+    android:paddingBottom="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_700">
+
+        <TextView
+            android:id="@+id/mailboxNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="1dp"
+            android:background="@color/color_500"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:text="@string/mailbox_name">
+        </TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginRight="1dp"
-            android:background="@color/color_300"
-            android:layout_weight="1">
-            <TextView
-                android:id="@+id/newMailTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:textSize="20sp"
-                android:visibility="gone"
-                android:textColor="#000000"
-                android:text="Otrzymano nowy list">
-            </TextView>
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/noticeTextView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:visibility="gone"
-                android:textSize="20sp"
-                android:textColor="#000000"
-                android:text="List awizowany">
-            </TextView>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="1dp"
+                android:background="@color/color_300"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/newMailTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingTop="15dp"
+                    android:textSize="20sp"
+                    android:visibility="invisible"
+                    android:textColor="#000000"
+                    android:layout_weight="1"
+                    android:text="Otrzymano nowy list">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/newMailDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    android:textColor="#000000"
+                    android:layout_weight="1"
+                    android:text="Data otrzymania">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/noticeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:visibility="invisible"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:layout_weight="2"
+                    android:text="List awizowany">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="1dp"
+                android:background="@color/color_300"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_marginEnd="5dp"
+                            android:gravity="end"
+                            android:text="@string/battery"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:id="@+id/batteryTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="start"
+                            android:text="100%"
+                            android:textColor="#000000" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_marginEnd="5dp"
+                            android:gravity="end"
+                            android:text="@string/temperature"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:id="@+id/temperatureTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="start"
+                            android:text="24,3"
+                            android:textColor="#000000" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_marginEnd="5dp"
+                            android:gravity="end"
+                            android:text="@string/pressure"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:id="@+id/pressureTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="start"
+                            android:text="1024 hPa"
+                            android:textColor="#000000" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_marginEnd="5dp"
+                            android:gravity="end"
+                            android:text="@string/humidity"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:id="@+id/humidityTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="start"
+                            android:text="100%"
+                            android:textColor="#000000" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginLeft="1dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:textSize="16sp"
+            android:gravity="center"
             android:background="@color/color_300"
-            android:layout_weight="1">
+            android:textColor="#373737"
+            android:text="@string/click_to_show_delivery_dates">
+        </TextView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginEnd="5dp"
-                        android:gravity="end"
-                        android:text="@string/battery"
-                        android:textColor="#000000" />
-
-                    <TextView
-                        android:id="@+id/batteryTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="start"
-                        android:text="100%"
-                        android:textColor="#000000" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginEnd="5dp"
-                        android:gravity="end"
-                        android:text="@string/temperature"
-                        android:textColor="#000000" />
-
-                    <TextView
-                        android:id="@+id/temperatureTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="start"
-                        android:text="24,3"
-                        android:textColor="#000000" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginEnd="5dp"
-                        android:gravity="end"
-                        android:text="@string/pressure"
-                        android:textColor="#000000" />
-
-                    <TextView
-                        android:id="@+id/pressureTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="start"
-                        android:text="1024 hPa"
-                        android:textColor="#000000" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_marginEnd="5dp"
-                        android:gravity="end"
-                        android:text="@string/humidity"
-                        android:textColor="#000000" />
-
-                    <TextView
-                        android:id="@+id/humidityTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="start"
-                        android:text="100%"
-                        android:textColor="#000000" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:background="@color/color_300"
-        android:textColor="#373737"
-        android:text="@string/click_to_show_delivery_dates">
-    </TextView>
+
 
 
 

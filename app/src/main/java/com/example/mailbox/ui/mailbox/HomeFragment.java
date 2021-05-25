@@ -1,9 +1,11 @@
 package com.example.mailbox.ui.mailbox;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -15,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -25,13 +27,14 @@ import com.example.mailbox.R;
 import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.databinding.FragmentHomeBinding;
+import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.util.UserUtil;
 import com.example.mailbox.util.Util;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -70,12 +73,10 @@ public class HomeFragment extends Fragment {
 
         setListViewAdapter();
 
-        List<Long> finalMailboxIds = mailboxIds;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // new intent, id as intent param
-                Toast.makeText(getContext(), mailboxIds.get(position).toString(), Toast.LENGTH_SHORT).show();
+                showDialog(mailboxIds.get(position));
             }
         });
 
@@ -124,6 +125,32 @@ public class HomeFragment extends Fragment {
             Util.setAlarm(getContext());
 
         return rootView;
+    }
+
+    private void showDialog(Long id) {
+        if (getContext() == null)
+            return;
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        //dialogBuilder.setIcon(R.drawable.ic_launcher);
+        dialogBuilder.setTitle(R.string.mail_dates_history);
+
+        MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(getContext());
+        Mailbox mailbox = mailboxDatabase.getMailboxById(id);
+        List<String> rawDatesString = mailbox.getMailHistory();
+        List<String> datesString = rawDatesString.stream().map(Util::formatStringDate).collect(Collectors.toList());
+        Collections.reverse(datesString);
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.dates_list_view, datesString);
+
+        dialogBuilder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setAdapter(arrayAdapter, null);
+        dialogBuilder.show();
     }
 
     private void setListViewAdapter() {

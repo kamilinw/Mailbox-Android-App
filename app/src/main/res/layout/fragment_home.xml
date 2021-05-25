@@ -16,7 +16,6 @@
         android:layout_marginTop="0dp"
         android:layout_marginStart="0dp"
         android:background="@color/white"
-        android:paddingTop="5dp"
         android:orientation="vertical">
 
         <ListView
@@ -24,6 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginTop="3dp"
+            android:background="#E8E8E8"
             />
 
         <LinearLayout
@@ -36,7 +37,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="2dp"
                 android:background="@color/background"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_refresh_24" />
@@ -45,8 +49,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
-                android:background="@color/background"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="4dp"                android:background="@color/background"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_add_new"/>
 
