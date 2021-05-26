@@ -1,4 +1,4 @@
-package com.example.mailbox.ui.mailbox;
+package com.example.mailbox.ui.mailbox.home;
 
 import android.content.Context;
 import android.icu.text.DateFormat;
@@ -71,17 +71,19 @@ public class MailboxListAdapter extends ArrayAdapter<Long> {
                 mailboxNameTextView.setText(mailbox.getName());
             }
             if (batteryTextView != null) {
-                batteryTextView.setText(mailbox.getBattery().toString());
+                batteryTextView.setText(getContext().getString(R.string.battery_value, mailbox.getBattery().toString()));
             }
 
             if (temperatureTextView != null) {
-                temperatureTextView.setText(mailbox.getTemperature().toString());
+                temperatureTextView.setText(getContext().getString(R.string.temperature_value, mailbox.getTemperature().toString()));
             }
             if (pressureTextView != null) {
-                pressureTextView.setText(mailbox.getPressure().toString());
+                String pressure = String.format(Locale.getDefault(),"%.1f", mailbox.getPressure()/100);
+                pressureTextView.setText(getContext().getString(R.string.pressure_value, pressure));
             }
             if (humidityTextView != null) {
-                humidityTextView.setText(mailbox.getHumidity().toString());
+                //String humidity = String.format(Locale.getDefault(),"%.1f %%", mailbox.getHumidity());
+                humidityTextView.setText(getContext().getString(R.string.humidity_value, mailbox.getHumidity().toString()));
             }
             if (newMailTextView != null) {
                 if (mailbox.isNewMail()){

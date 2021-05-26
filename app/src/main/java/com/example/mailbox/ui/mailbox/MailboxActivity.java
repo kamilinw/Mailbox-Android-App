@@ -13,7 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +21,9 @@ import android.widget.Toast;
 import com.example.mailbox.R;
 import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.databinding.ActivityMailboxBinding;
+import com.example.mailbox.ui.mailbox.about.AboutFragment;
+import com.example.mailbox.ui.mailbox.home.HomeFragment;
+import com.example.mailbox.ui.mailbox.profile.ProfileFragment;
 import com.example.mailbox.ui.main.MainActivity;
 import com.example.mailbox.util.UserUtil;
 import com.google.android.material.navigation.NavigationView;
@@ -114,10 +116,17 @@ public class MailboxActivity extends AppCompatActivity implements NavigationView
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    protected void onResumeFragments() {
+        // set username and email on drawer header
+        NavigationView navigationView = binding.navView;
+        View view = navigationView.getHeaderView(0);
+        TextView usernameTextView = view.findViewById(R.id.usernameTextView);
+        TextView emailTextView = view.findViewById(R.id.emailTextView);
+        UserDatabase userDatabase = UserDatabase.getInstance(getApplicationContext());
+        usernameTextView.setText(userDatabase.getUsername());
+        emailTextView.setText(userDatabase.getEmail());
+        userDatabase.close();
+        super.onResumeFragments();
     }
 
     @Override
@@ -128,6 +137,4 @@ public class MailboxActivity extends AppCompatActivity implements NavigationView
             super.onBackPressed();
         }
     }
-
-
 }

@@ -163,6 +163,6 @@ public class UserDatabase extends SQLiteOpenHelper {
         String username = "";
         username = cursor.getString(cursor.getColumnIndexOrThrow("email"));
         cursor.close();
-        return username.isEmpty() ? null : username;
+        return username;
     }
 }

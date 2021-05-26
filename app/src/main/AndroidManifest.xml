@@ -16,15 +16,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mailbox"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.mailbox.AddMailboxActivity"></activity>
+        <activity android:name=".ui.mailbox.profile.ChangePasswordActivity"></activity>
+        <activity android:name=".ui.mailbox.profile.ChangeEmailActivity" />
+        <activity android:name=".ui.mailbox.home.AddMailboxActivity" />
         <activity android:name=".ui.auth.RegisterActivity" />
 
         <receiver
-            android:name=".service.AlarmReceiver"
+            android:name=".alarm.AlarmReceiver"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name=".service.MyStartServiceReceiver"
+            android:name=".alarm.MyStartServiceReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

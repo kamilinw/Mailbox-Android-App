@@ -1,4 +1,4 @@
-package com.example.mailbox.ui.mailbox;
+package com.example.mailbox.ui.mailbox.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 

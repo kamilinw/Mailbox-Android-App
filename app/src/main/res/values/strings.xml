@@ -45,6 +45,25 @@
     <string name="recieved">"otrzymano: %s"</string>
     <string name="mail_dates_history">Daty otrzymania listów</string>
     <string name="application_info">Aplikacja powstała jako część pracy magisterskiej realizowanej na Politechnice Rzeszowskiej, na kierunku Mechatronika. Tematem pracy było zaprojektowanie skrzynki na listy, która będzie powiadamiać użytkownika o otrzymanej korespondencji za pośrednictwem aplikacji mobilnej. Autorem aplikacji jest Kamil Wnęk.</string>
+    <string name="show_notifications">Pokazuj powiadomienia o nowym liście</string>
+    <string name="change_email">Zmień e-mail</string>
+    <string name="change">zmień</string>
+    <string name="change_password">Zmień hasło</string>
+    <string name="old_email">Aktualny adres e-mail</string>
+    <string name="mailbox_new_email">Nowy adres e-mail</string>
+    <string name="repeat_new_email">powtórz nowy adres e-mail</string>
+    <string name="wrong_repeat_email">Błędna weryfikacja adresu e-mail</string>
+    <string name="old_password">Aktualne hasło</string>
+    <string name="new_password">Nowe hasło</string>
+    <string name="repeat_new_password">powtórz nowe hasło</string>
+    <string name="change_password_success">Pomyślnie zmieniono hasło!</string>
+    <string name="change_email_success">Pomyślnie zmieniono adres email!</string>
+    <string name="new_letter_recieved">Otrzymano nowy list</string>
+    <string name="notice">List awizowany</string>
+    <string name="battery_value">%s V</string>
+    <string name="temperature_value">%s &#176;C</string>
+    <string name="pressure_value">%s hPa</string>
+    <string name="humidity_value">%s %%</string>
 
 
 

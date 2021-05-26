@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mailbox.HomeFragment"
+    tools:context=".ui.mailbox.home.HomeFragment"
     android:background="#ECECEC"
     >
 
@@ -15,7 +15,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginStart="0dp"
-        android:background="@color/white"
+        android:background="@color/blue_light"
         android:orientation="vertical">
 
         <ListView
@@ -24,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="3dp"
-            android:background="#E8E8E8"
             />
 
         <LinearLayout
@@ -41,7 +40,8 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="2dp"
-                android:background="@color/background"
+                android:background="@drawable/round_background"
+                android:backgroundTint="@color/background"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_refresh_24" />
             <ImageButton
@@ -52,7 +52,9 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginStart="2dp"
-                android:layout_marginEnd="4dp"                android:background="@color/background"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/round_background"
+                android:backgroundTint="@color/background"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_add_new"/>
 

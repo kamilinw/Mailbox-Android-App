@@ -4,20 +4,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.PorterDuff;
+import android.view.MotionEvent;
+import android.view.View;
 
-import com.example.mailbox.service.AlarmReceiver;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import com.example.mailbox.R;
+import com.example.mailbox.alarm.AlarmReceiver;
 
 import static android.content.Context.ALARM_SERVICE;
 
@@ -40,5 +32,26 @@ public class Util {
         String[] time = parts[1].split(":");
         String date = String.format("%s %s:%s", parts[0], time[0], time[1]);
         return date;
+    }
+
+    public static void buttonEffect(View button, Context context){
+        button.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(context.getResources().getColor(R.color.blue_dark, context.getTheme()), PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 }

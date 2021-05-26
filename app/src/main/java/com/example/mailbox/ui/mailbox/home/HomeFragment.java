@@ -1,4 +1,4 @@
-package com.example.mailbox.ui.mailbox;
+package com.example.mailbox.ui.mailbox.home;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.example.mailbox.R;
 import com.example.mailbox.data.MailboxDatabase;
@@ -100,7 +99,7 @@ public class HomeFragment extends Fragment {
         });
 
         ImageButton refreshButton = rootView.findViewById(R.id.refreshButton);
-
+        Util.buttonEffect(refreshButton, getContext());
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +108,7 @@ public class HomeFragment extends Fragment {
         });
 
         ImageButton addMailboxButton = rootView.findViewById(R.id.addMailboxButton);
+        Util.buttonEffect(addMailboxButton, getContext());
         addMailboxButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,7 +211,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         //setListViewAdapter();
-        updateListView(5);
+        if (timer == null)
+            updateListView(5);
         super.onResume();
     }
 }

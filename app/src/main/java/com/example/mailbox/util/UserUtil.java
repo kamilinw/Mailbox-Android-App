@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -23,7 +21,7 @@ import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.model.UserResponse;
-import com.example.mailbox.service.AlarmReceiver;
+import com.example.mailbox.alarm.AlarmReceiver;
 import com.example.mailbox.ui.mailbox.MailboxActivity;
 import com.example.mailbox.ui.main.MainActivity;
 
@@ -65,13 +63,9 @@ public class UserUtil {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code() != 200) {
-                    // TODO handle errors
-
                     if (response.code() == 403)
                         logoutUser(context);
-
                     Toast.makeText(context, "Response code: " + response.code(), Toast.LENGTH_LONG).show();
-
                     return;
                 }
 
@@ -80,15 +74,16 @@ public class UserUtil {
                 // save data to database
                 MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(context);
                 List<Long> mailboxIds = new ArrayList<>();
+                SharedPreferences sharedPref = context.getSharedPreferences("notification", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+
                 for (Mailbox mailbox: userResponse.getMailboxes() ) {
                     mailboxIds.add(mailbox.getMailboxId());
                     mailboxDatabase.saveMailbox(mailbox);
+                    boolean showNotificationSettings = sharedPref.getBoolean("showNotification", true);
 
-                    if (showNotification){
+                    if (showNotification && showNotificationSettings){
                         boolean newMail = mailbox.isNewMail();
-
-                        SharedPreferences sharedPref = context.getSharedPreferences("notification", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
 
                         boolean isNotificationShowed = sharedPref.getBoolean("isNotificationShowed"+mailbox.getMailboxId(), false);
 
@@ -99,7 +94,7 @@ public class UserUtil {
                         } else if (!newMail){
                             editor.putBoolean("isNotificationShowed"+mailbox.getMailboxId(), false);
                         }
-                        editor.commit();
+                        editor.apply();
                     }
                 }
                 UserDatabase userDatabase = UserDatabase.getInstance(context);
@@ -115,7 +110,6 @@ public class UserUtil {
                         userResponse.getEmail(),
                         mailboxIds
                 );
-                //Toast.makeText(context, "success! " + userResponse.getMailboxes().get(0).getBattery(), Toast.LENGTH_LONG).show();
                 userDatabase.close();
                 mailboxDatabase.close();
 
@@ -125,6 +119,7 @@ public class UserUtil {
                 }
 
                 if (isLoggingIn){
+                    editor.putBoolean("showNotification", true).apply();
                     Intent intent = new Intent(context, MailboxActivity.class);
                     context.startActivity(intent);
                 }
@@ -132,15 +127,13 @@ public class UserUtil {
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(context, "Nie udało się pobrać danych!", Toast.LENGTH_LONG).show();
-
+                Log.w(TAG, "Failed to download data!");
             }
         });
 
     }
 
-    public static void createMailboxNotification(Context context, Mailbox mailbox)
-    {
+    public static void createMailboxNotification(Context context, Mailbox mailbox){
         Intent notificationIntent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
@@ -173,7 +166,6 @@ public class UserUtil {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build());
     }
-
 
     public static <T extends BaseAdapter> void deleteMailbox(Context context, Long id, T adapter) {
 
@@ -236,5 +228,9 @@ public class UserUtil {
 
             }
         });
+    }
+
+    public static void changeEmail(Context context){
+
     }
 }

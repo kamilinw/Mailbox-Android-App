@@ -1,15 +1,10 @@
-package com.example.mailbox.service;
+package com.example.mailbox.alarm;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.mailbox.util.NetworkUtil;
 import com.example.mailbox.util.Util;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class MyStartServiceReceiver extends BroadcastReceiver {
 

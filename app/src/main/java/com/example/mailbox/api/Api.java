@@ -1,6 +1,8 @@
 package com.example.mailbox.api;
 
 import com.example.mailbox.model.AddMailboxRequest;
+import com.example.mailbox.model.ChangeEmailRequest;
+import com.example.mailbox.model.ChangePasswordRequest;
 import com.example.mailbox.model.UserLoginRequest;
 import com.example.mailbox.model.UserRegisterRequest;
 import com.example.mailbox.model.UserResponse;
@@ -35,6 +37,18 @@ public interface Api {
     Call<Void> addMailbox(
             @Header("Authorization") String token,
             @Body AddMailboxRequest addMailboxRequest
+    );
+
+    @POST("api/user/email")
+    Call<UserResponse> changeEmail(
+            @Header("Authorization") String token,
+            @Body ChangeEmailRequest changeEmailRequest
+    );
+
+    @POST("api/user/password")
+    Call<UserResponse> changePassword(
+            @Header("Authorization") String token,
+            @Body ChangePasswordRequest changePasswordRequest
     );
 
     @DELETE("api/user/mailbox/{id}")
