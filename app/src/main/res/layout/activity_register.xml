@@ -8,15 +8,18 @@
     android:background="@color/background">
 
     <ProgressBar
-        android:id="@+id/loading"
+        android:id="@+id/loadingRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="64dp"
-        android:visibility="gone"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/color_700"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,27 +35,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="20dp"
-            android:padding="15dp"
-            android:text="@string/register_header"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="60dp"
             android:layout_marginRight="16dp"
             android:backgroundTint="#FFFFFF"
+            android:textCursorDrawable="@null"
             android:ems="10"
             android:hint="@string/username"
             android:inputType="textPersonName"
@@ -65,10 +57,10 @@
             android:id="@+id/textViewWrongUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="@string/wrong_username"
             android:textColor="@color/error_input"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:visibility="gone" />
 
         <EditText
@@ -79,6 +71,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="16dp"
             android:backgroundTint="#FFFFFF"
+            android:textCursorDrawable="@null"
             android:ems="10"
             android:hint="@string/password"
             android:inputType="textPassword"
@@ -91,10 +84,10 @@
             android:id="@+id/textViewEnterPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="@string/wrong_password"
             android:textColor="@color/error_input"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:visibility="gone" />
 
         <EditText
@@ -105,6 +98,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="16dp"
             android:backgroundTint="#FFFFFF"
+            android:textCursorDrawable="@null"
             android:ems="10"
             android:hint="@string/repeat_password"
             android:inputType="textPassword"
@@ -117,10 +111,10 @@
             android:id="@+id/textViewEnterRepeatPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="@string/wrong_repeat_password"
             android:textColor="@color/error_input"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:visibility="gone" />
 
         <EditText
@@ -128,9 +122,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="16dp"
             android:backgroundTint="#FFFFFF"
+            android:textCursorDrawable="@null"
             android:ems="10"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
@@ -143,10 +138,10 @@
             android:id="@+id/textViewWrongEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="@string/wrong_email"
             android:textColor="@color/error_input"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:visibility="gone" />
 
 

@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.mailbox.R;
 import com.example.mailbox.api.AuthRetrofitClient;
-import com.example.mailbox.model.UserRegisterRequest;
+import com.example.mailbox.model.request.UserRegisterRequest;
 import com.example.mailbox.ui.main.MainActivity;
 import com.example.mailbox.util.NetworkUtil;
 
@@ -27,8 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -63,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.editTextEmail);
 
         registerButton = findViewById(R.id.createAccountButton);
-        loadingProgressBar = findViewById(R.id.loading);
+        loadingProgressBar = findViewById(R.id.loadingRegister);
         context = this;
     }
 
@@ -100,7 +98,10 @@ public class RegisterActivity extends AppCompatActivity {
                         handleBadRequest(response);
                     }
 
-                    Toast.makeText(getApplicationContext(), "Response code: " + response.code(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.register_failed_toast) + " " + getString(R.string.error_code) + response.code(),
+                            Toast.LENGTH_LONG).show();
                     enableViews(true);
                     return;
                 }
@@ -127,8 +128,6 @@ public class RegisterActivity extends AppCompatActivity {
                 enableViews(true);
             }
         });
-
-        enableViews(true);
     }
 
     private void handleBadRequest(Response<Void> response) {

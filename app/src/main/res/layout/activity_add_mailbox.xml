@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mailbox.home.AddMailboxActivity"
-    android:background="@color/background">
+    android:background="@color/blue_light">
 
 
     <ProgressBar
@@ -18,6 +18,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="64dp"
         android:visibility="invisible"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/color_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,9 +42,8 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="@string/add_mailbox_description"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:justificationMode="inter_word"/>
+            android:textColor="#000000"
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/editTextUsername"
@@ -50,12 +52,12 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="16dp"
-            android:backgroundTint="#FFFFFF"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="@string/mailbox_username"
             android:inputType="textPersonName"
             android:padding="8dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textColorHighlight="#FFFFFF"
             android:textColorLink="#FFFFFF" />
 
@@ -63,10 +65,10 @@
             android:id="@+id/textViewWrongUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="@string/wrong_username"
             android:textColor="@color/error_input"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:visibility="gone" />
 
         <EditText
@@ -76,12 +78,12 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="16dp"
-            android:backgroundTint="#FFFFFF"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="@string/mailbox_password"
             android:inputType="textPassword"
             android:padding="8dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textColorHighlight="#FFFFFF"
             android:textColorLink="#FFFFFF" />
 
@@ -89,10 +91,10 @@
             android:id="@+id/textViewWrongMailboxPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="@string/wrong_password"
             android:textColor="@color/error_input"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:visibility="gone" />
 
         <EditText
@@ -102,12 +104,12 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="16dp"
-            android:backgroundTint="#FFFFFF"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="@string/repeat_password"
             android:inputType="textPassword"
             android:padding="8dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textColorHighlight="#FFFFFF"
             android:textColorLink="#FFFFFF" />
 
@@ -115,10 +117,10 @@
             android:id="@+id/textViewWrongMailboxRepeatPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="@string/wrong_repeat_password"
             android:textColor="@color/error_input"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:visibility="gone" />
 
         <EditText
@@ -128,12 +130,12 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="16dp"
-            android:backgroundTint="#FFFFFF"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="@string/mailbox_name"
             android:inputType="textShortMessage"
             android:padding="8dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textColorHighlight="#FFFFFF"
             android:textColorLink="#FFFFFF" />
 
@@ -141,10 +143,10 @@
             android:id="@+id/textViewWrongMailboxName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="@string/wrong_mailbox_name"
             android:textColor="@color/error_input"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:visibility="gone" />
 
 

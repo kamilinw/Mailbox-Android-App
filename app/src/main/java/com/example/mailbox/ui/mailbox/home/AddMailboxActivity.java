@@ -2,9 +2,6 @@ package com.example.mailbox.ui.mailbox.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +15,7 @@ import com.example.mailbox.R;
 import com.example.mailbox.api.MailboxRetrofitClient;
 import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
-import com.example.mailbox.model.AddMailboxRequest;
-import com.example.mailbox.model.Mailbox;
-import com.example.mailbox.model.UserRegisterRequest;
-import com.example.mailbox.model.UserResponse;
-import com.example.mailbox.ui.main.MainActivity;
+import com.example.mailbox.model.request.AddMailboxRequest;
 import com.example.mailbox.util.NetworkUtil;
 import com.example.mailbox.util.UserUtil;
 
@@ -31,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -105,7 +97,10 @@ public class AddMailboxActivity extends AppCompatActivity {
                         return;
                     }
 
-                    Toast.makeText(getApplicationContext(), "Response code: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.add_mailbox_failed_toast) + " " + getString(R.string.error_code) + response.code(),
+                            Toast.LENGTH_LONG).show();
                     enableViews(true);
                     return;
                 }
@@ -126,8 +121,8 @@ public class AddMailboxActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Nie udało się dodać skrzynki!", Toast.LENGTH_LONG).show();
-
+                Toast.makeText(getApplicationContext(), R.string.add_mailbox_failed_toast, Toast.LENGTH_LONG).show();
+                enableViews(true);
             }
         });
     }

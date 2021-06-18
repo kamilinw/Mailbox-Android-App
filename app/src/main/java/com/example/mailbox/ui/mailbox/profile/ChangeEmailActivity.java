@@ -2,8 +2,6 @@ package com.example.mailbox.ui.mailbox.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +15,7 @@ import com.example.mailbox.R;
 import com.example.mailbox.api.MailboxRetrofitClient;
 import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
-import com.example.mailbox.model.AddMailboxRequest;
-import com.example.mailbox.model.ChangeEmailRequest;
+import com.example.mailbox.model.request.ChangeEmailRequest;
 import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.model.UserResponse;
 import com.example.mailbox.util.NetworkUtil;
@@ -100,7 +97,10 @@ public class ChangeEmailActivity extends AppCompatActivity {
                         return;
                     }
 
-                    Toast.makeText(getApplicationContext(), "Response code: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.change_email_failure) + " " + getString(R.string.error_code) + response.code(),
+                            Toast.LENGTH_LONG).show();
                     enableViews(true);
                     return;
                 }
@@ -139,7 +139,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Nie udało się zmienić adresu email!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.change_email_failure, Toast.LENGTH_LONG).show();
                 enableViews(true);
             }
         });

@@ -2,7 +2,7 @@
     <string name="app_name">Mailbox</string>
     <string name="log_in_button">Zaloguj się</string>
     <string name="sign_up_button">Utwórz konto</string>
-    <string name="welcome_text">Welcome to Mailbox App!</string>
+    <string name="welcome_text">Witaj w aplikacji skrzynki na listy!</string>
     <string name="login_header">Zaloguj się do aplikacji mailbox</string>
     <string name="email">E-mail</string>
     <string name="wrong_email">Niepoprawny adres e-mail</string>
@@ -60,11 +60,14 @@
     <string name="change_email_success">Pomyślnie zmieniono adres email!</string>
     <string name="new_letter_recieved">Otrzymano nowy list</string>
     <string name="notice">List awizowany</string>
-    <string name="battery_value">%s V</string>
+    <string name="battery_value">%s %%</string>
     <string name="temperature_value">%s &#176;C</string>
     <string name="pressure_value">%s hPa</string>
     <string name="humidity_value">%s %%</string>
-
+    <string name="error_code">"Kod błędu: "</string>
+    <string name="add_mailbox_failed_toast">Nie udało się dodać skrzynki!</string>
+    <string name="change_email_failure">Nie udało się zmienić adresu email!</string>
+    <string name="change_password_failure">Nie udało się zmienić hasła!</string>
 
 
 </resources>

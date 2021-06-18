@@ -1,5 +1,6 @@
 package com.example.mailbox.util;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -22,6 +23,7 @@ import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.model.UserResponse;
 import com.example.mailbox.alarm.AlarmReceiver;
+import com.example.mailbox.ui.auth.LoginActivity;
 import com.example.mailbox.ui.mailbox.MailboxActivity;
 import com.example.mailbox.ui.main.MainActivity;
 
@@ -122,6 +124,7 @@ public class UserUtil {
                     editor.putBoolean("showNotification", true).apply();
                     Intent intent = new Intent(context, MailboxActivity.class);
                     context.startActivity(intent);
+                    ((Activity) context).finish();
                 }
             }
 

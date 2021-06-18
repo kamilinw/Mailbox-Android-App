@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.mailbox.R;
 import com.example.mailbox.api.AuthRetrofitClient;
 import com.example.mailbox.data.UserDatabase;
-import com.example.mailbox.model.UserLoginRequest;
+import com.example.mailbox.model.request.UserLoginRequest;
 import com.example.mailbox.ui.main.MainActivity;
 import com.example.mailbox.util.NetworkUtil;
 import com.example.mailbox.util.UserUtil;
@@ -79,11 +79,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() != 200) {
                     // TODO handle errors
-                    Toast.makeText(LoginActivity.this, "Response code: " + response.code(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.login_failed_toast) + " " + getString(R.string.error_code) + response.code(),
+                            Toast.LENGTH_LONG).show();
                     enableViews(true);
                     return;
                 }
-                enableViews(true);
+
 
                 // save token to database
                 UserDatabase db = UserDatabase.getInstance(context);
@@ -92,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 // download user data and start Mailbox activity
                 UserUtil.downloadUserData(context, true, null,false);
-                finish();
+                enableViews(true);
             }
 
             @Override

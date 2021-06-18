@@ -71,7 +71,15 @@ public class MailboxListAdapter extends ArrayAdapter<Long> {
                 mailboxNameTextView.setText(mailbox.getName());
             }
             if (batteryTextView != null) {
-                batteryTextView.setText(getContext().getString(R.string.battery_value, mailbox.getBattery().toString()));
+                Double batteryDouble = mailbox.getBattery();
+                String battery = "0";
+                if (batteryDouble >= 2.5 && batteryDouble < 4.2)
+                    battery = String.format(Locale.getDefault(), "%.1f", (mailbox.getBattery()-2.5)/1.7*100);
+                else if (batteryDouble < 2.5)
+                    battery = "0";
+                else
+                    battery = "100";
+                batteryTextView.setText(getContext().getString(R.string.battery_value, battery));
             }
 
             if (temperatureTextView != null) {

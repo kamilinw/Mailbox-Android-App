@@ -158,12 +158,11 @@ public class HomeFragment extends Fragment {
         MailboxDatabase mailboxDatabase = MailboxDatabase.getInstance(getContext());
 
         mailboxIds = userDatabase.getMailboxIds();
-        mailboxIds = mailboxIds.stream().sorted().collect(Collectors.toList());
-
         if (mailboxIds == null){
             mailboxIds = new ArrayList<>();
             mailboxIds.add(-1L);
         }
+        mailboxIds = mailboxIds.stream().sorted().collect(Collectors.toList());
 
         userDatabase.close();
         mailboxDatabase.close();
@@ -210,9 +209,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onResume() {
-        //setListViewAdapter();
-        if (timer == null)
-            updateListView(5);
+        updateListView(5);
         super.onResume();
     }
 }

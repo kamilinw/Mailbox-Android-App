@@ -15,8 +15,7 @@ import com.example.mailbox.R;
 import com.example.mailbox.api.MailboxRetrofitClient;
 import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.data.UserDatabase;
-import com.example.mailbox.model.ChangeEmailRequest;
-import com.example.mailbox.model.ChangePasswordRequest;
+import com.example.mailbox.model.request.ChangePasswordRequest;
 import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.model.UserResponse;
 import com.example.mailbox.util.NetworkUtil;
@@ -98,7 +97,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         return;
                     }
 
-                    Toast.makeText(getApplicationContext(), "Response code: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.change_password_failure) + " " + getString(R.string.error_code) + response.code(),
+                            Toast.LENGTH_LONG).show();
                     enableViews(true);
                     return;
                 }
@@ -135,7 +137,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Nie udało się zmienić hasła!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.change_password_failure, Toast.LENGTH_LONG).show();
                 enableViews(true);
             }
         });

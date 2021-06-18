@@ -1,13 +1,12 @@
 package com.example.mailbox.api;
 
-import com.example.mailbox.model.AddMailboxRequest;
-import com.example.mailbox.model.ChangeEmailRequest;
-import com.example.mailbox.model.ChangePasswordRequest;
-import com.example.mailbox.model.UserLoginRequest;
-import com.example.mailbox.model.UserRegisterRequest;
+import com.example.mailbox.model.request.AddMailboxRequest;
+import com.example.mailbox.model.request.ChangeEmailRequest;
+import com.example.mailbox.model.request.ChangePasswordRequest;
+import com.example.mailbox.model.request.UserLoginRequest;
+import com.example.mailbox.model.request.UserRegisterRequest;
 import com.example.mailbox.model.UserResponse;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;

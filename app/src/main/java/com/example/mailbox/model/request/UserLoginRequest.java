@@ -1,4 +1,4 @@
-package com.example.mailbox.model;
+package com.example.mailbox.model.request;
 
 public class UserLoginRequest {
     private String username;

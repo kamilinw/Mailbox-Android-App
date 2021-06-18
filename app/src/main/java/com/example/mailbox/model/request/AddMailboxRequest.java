@@ -1,15 +1,14 @@
-package com.example.mailbox.model;
+package com.example.mailbox.model.request;
 
-public class UserRegisterRequest {
-
+public class AddMailboxRequest {
     private String username;
     private String password;
-    private String email;
+    private String name;
 
-    public UserRegisterRequest(String username, String password, String email) {
+    public AddMailboxRequest(String username, String password, String name) {
         this.username = username;
         this.password = password;
-        this.email = email;
+        this.name = name;
     }
 
     public String getUsername() {
@@ -28,11 +27,11 @@ public class UserRegisterRequest {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -16,10 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mailbox"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.mailbox.profile.ChangePasswordActivity"></activity>
-        <activity android:name=".ui.mailbox.profile.ChangeEmailActivity" />
-        <activity android:name=".ui.mailbox.home.AddMailboxActivity" />
-        <activity android:name=".ui.auth.RegisterActivity" />
+        <activity android:name=".ui.mailbox.profile.ChangePasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.mailbox.profile.ChangeEmailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.mailbox.home.AddMailboxActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.auth.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.auth.LoginActivity"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".alarm.AlarmReceiver"
@@ -35,11 +41,13 @@
 
         <activity
             android:name=".ui.mailbox.MailboxActivity"
-            android:theme="@style/Theme.Mailbox.NoActionBar" />
-        <activity android:name=".ui.auth.LoginActivity" />
+            android:theme="@style/Theme.Mailbox.NoActionBar"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".ui.main.MainActivity"
-            android:theme="@style/Theme.Mailbox.NoActionBar">
+            android:theme="@style/Theme.Mailbox.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
