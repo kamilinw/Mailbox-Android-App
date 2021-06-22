@@ -59,9 +59,6 @@ public class UserDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
-    //TODO reset database,
-    // add Email and mailboxes (invokes setters), getters and setters
-
     public static synchronized UserDatabase getInstance(final Context c) {
         if (instance == null) {
             instance = new UserDatabase(c.getApplicationContext());

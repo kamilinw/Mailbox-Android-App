@@ -11,12 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MailboxRetrofitClient {
 
     private Retrofit retrofit;
-    // TODO move url to resources
     private static final String BASE_URL = "https://api-mailbox.herokuapp.com/";
     private static MailboxRetrofitClient mInstance;
-
-
-
 
     public MailboxRetrofitClient(String jwtToken) {
 

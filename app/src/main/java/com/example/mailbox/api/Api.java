@@ -22,35 +22,35 @@ public interface Api {
             @Body UserLoginRequest userLoginRequest
     );
 
-    @GET("api/user/")
+    @GET("api/uzytkownik/")
     Call<UserResponse> getUserDetails(
             @Header("Authorization") String token
     );
 
-    @POST("registration")
+    @POST("rejestracja")
     Call<Void> userRegister(
             @Body UserRegisterRequest userRegisterRequest
     );
 
-    @POST("api/user/mailbox")
+    @POST("api/uzytkownik/skrzynka")
     Call<Void> addMailbox(
             @Header("Authorization") String token,
             @Body AddMailboxRequest addMailboxRequest
     );
 
-    @POST("api/user/email")
+    @POST("api/uzytkownik/email")
     Call<UserResponse> changeEmail(
             @Header("Authorization") String token,
             @Body ChangeEmailRequest changeEmailRequest
     );
 
-    @POST("api/user/password")
+    @POST("api/uzytkownik/haslo")
     Call<UserResponse> changePassword(
             @Header("Authorization") String token,
             @Body ChangePasswordRequest changePasswordRequest
     );
 
-    @DELETE("api/user/mailbox/{id}")
+    @DELETE("api/uzytkownik/skrzynka/{id}")
     Call<UserResponse> deleteMailbox(
             @Header("Authorization") String token,
             @Path("id") Long id

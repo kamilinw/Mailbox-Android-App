@@ -1,7 +1,6 @@
 package com.example.mailbox.ui.mailbox.home;
 
 import android.content.Context;
-import android.icu.text.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,6 @@ import com.example.mailbox.data.MailboxDatabase;
 import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.util.Util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 

@@ -23,7 +23,6 @@ import com.example.mailbox.data.UserDatabase;
 import com.example.mailbox.model.Mailbox;
 import com.example.mailbox.model.UserResponse;
 import com.example.mailbox.alarm.AlarmReceiver;
-import com.example.mailbox.ui.auth.LoginActivity;
 import com.example.mailbox.ui.mailbox.MailboxActivity;
 import com.example.mailbox.ui.main.MainActivity;
 
